@@ -5,7 +5,7 @@ glyphs = {
     "nf-cod-archive": "ea98",
     "nf-cod-arrow_both": "ea99",
     "nf-cod-arrow_down": "ea9a",
-    "nf-cod-arrow_left": "ea9b",
+    "nf-c-arrow_left": "ea9b",
     "nf-cod-arrow_right": "ea9c",
     "nf-cod-arrow_small_down": "ea9d",
     "nf-cod-arrow_small_left": "ea9e",
