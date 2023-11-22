@@ -1,3 +1,4 @@
+# download and extracted from https://github.com/ryanoasis/nerd-fonts/blob/gh-pages/_posts/2017-01-04-icon-cheat-sheet.md
 glyphs = {
     "nf-cod-account": "eb99",
     "nf-cod-activate_breakpoints": "ea97",
