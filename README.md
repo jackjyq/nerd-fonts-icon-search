@@ -5,3 +5,5 @@
 ## 参考资料
 
 - [ChromaDB](https://docs.trychroma.com/)
+- [Nerdfonts Cheatsheet](https://www.nerdfonts.com/cheat-sheet)
+- [Nerdfonts Github](https://github.com/ryanoasis/nerd-fonts)
