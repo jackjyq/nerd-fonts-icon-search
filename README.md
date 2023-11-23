@@ -8,7 +8,11 @@
 pip install -r requirements.txt -i https://pypi.org/simple
 ```
 
-## 参考资料
+## Configuration
+
+Copy `default_config.py` as `local_config.py` and edit.
+
+## References
 
 - [ChromaDB](https://docs.trychroma.com/)
 - [Nerdfonts Cheatsheet](https://www.nerdfonts.com/cheat-sheet)
