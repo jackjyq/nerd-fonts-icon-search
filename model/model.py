@@ -1,4 +1,4 @@
-#################################### load config #######################################
+#################################### read config #######################################
 import sys
 
 try:
@@ -11,11 +11,8 @@ except ImportError:
 USER_CONFIG = Config()
 """
         )
-    print("please edit `config.py` and try again\n")
+    print("Please edit `config.py` and try again\n")
     sys.exit()
-else:
-    print("load config.py\n")
-    print(USER_CONFIG)
 ########################################################################################
 
 import chromadb
@@ -35,6 +32,10 @@ class SearchResult(BaseModel):
     description: str
 
 
+class SearchResults(BaseModel):
+    results: list[SearchResult]
+
+
 def parse_font_name(name: str) -> tuple[str, str, str]:
     """
     Args:
@@ -51,22 +52,41 @@ def parse_font_name(name: str) -> tuple[str, str, str]:
 
 
 class Model:
-    def __init__(self, coll_name: str = USER_CONFIG.huggingface_model) -> None:
+    def __init__(
+        self,
+        coll_name: str = USER_CONFIG.huggingface_model,
+        input_data: dict[str, str] | None = None,
+    ) -> None:
+        """initialize database model
+
+        Args:
+            coll_name: collection name to identify the collection
+            input_data: (dict) the raw data to populate the collection
+                        (None) when the collection exist, the input_data is not needed
+                               however, you can still call self.build_coll(input_data)
+                               to rebuild the collection
+        """
         self._client = chromadb.PersistentClient(path="./model/chromadb")
         self._coll_name = coll_name
 
-        # use local embedding function to create the collection and  populate data
+        # build collection with input data if not exist
         if not self._exist_coll():
-            self._coll = self._client.create_collection(
-                coll_name, embedding_function=self._get_local_emb_fun()
-            )
-            self._populate_coll(data_subset.glyphs)
+            self.build_coll(input_data)
 
-        # switch to cloud embedding function to query whenever possible
-        if USER_CONFIG.huggingface_api_key:
-            self._coll = self._client.get_collection(
-                coll_name, embedding_function=self._get_cloud_emb_fun()
+        # load collection based on config
+        self._coll = (
+            self._client.get_collection(
+                # use cloud embedding function whenever possible
+                self._coll_name,
+                embedding_function=self._get_cloud_emb_fun(),
             )
+            if USER_CONFIG.huggingface_api_key
+            else self._client.get_collection(
+                # otherwise, use local embedding function
+                self._coll_name,
+                embedding_function=self._get_local_emb_fun(),
+            )
+        )
 
     ############################# private methods ######################################
     def _exist_coll(self) -> bool:
@@ -75,21 +95,43 @@ class Model:
         )
 
     def _get_local_emb_fun(self) -> EmbeddingFunction:
-        return embedding_functions.SentenceTransformerEmbeddingFunction(
+        print(f"Loading local embedding function {self._coll_name}...", end=" ")
+        emb_fun = embedding_functions.SentenceTransformerEmbeddingFunction(
             model_name=USER_CONFIG.huggingface_model,
             device=USER_CONFIG.device,
         )
+        print("ok!")
+        return emb_fun
 
     def _get_cloud_emb_fun(self) -> EmbeddingFunction:
-        assert USER_CONFIG.huggingface_api_key, "huggingface_api_key is None"
+        print(f"Loading cloud embedding function {self._coll_name}...", end=" ")
+        assert (
+            USER_CONFIG.huggingface_api_key
+        ), "Fail to load because huggingface_api_key is None"
 
-        return embedding_functions.HuggingFaceEmbeddingFunction(
+        emb_fun = embedding_functions.HuggingFaceEmbeddingFunction(
             model_name=USER_CONFIG.huggingface_model,
             api_key=USER_CONFIG.huggingface_api_key,
         )
+        print("ok!")
+        return emb_fun
 
-    def _populate_coll(self, input_data: dict[str, str]):
-        """populate database by glyphs"""
+    ############################## public methods ######################################
+    def build_coll(self, input_data: dict[str, str] | None):
+        """populate the collection with input data, existing data will be overwritten
+
+        Raises:
+            will raise exception when input_data is None
+        """
+        assert input_data, "Fail to build collection, because the input data is empty"
+
+        # create collection with local embedding function
+        coll = self._client.get_or_create_collection(
+            self._coll_name,
+            embedding_function=self._get_local_emb_fun(),
+        )
+
+        print("Transforming input data...")
         output_data = []
         for font_name, unicode in input_data.items():
             series, group, description = parse_font_name(font_name)
@@ -106,35 +148,35 @@ class Model:
                     }
                 )
 
+        print(f"Populating database by {USER_CONFIG.device}...")
         for item in tqdm(output_data):
-            self._coll.add(**item)
+            coll.upsert(**item)
 
-    ############################## public methods ######################################
-    def search(self, query: str, n_results: int) -> list[SearchResult]:
-        """query database
+    def search(self, query: str, n_results: int) -> SearchResults:
+        """search database
 
         Args:
-            query: query string
-            n_results: top k results
+            query: query text
+            n_results: top n results
 
         Return:
-            list of SearchResult
+            SearchResults
         """
-        search_result = []
+        results = []
         if query_result := self._coll.query(
             query_texts=[query],
             n_results=n_results,
             include=["metadatas", "documents"],
         ):
-            for i, font_name in enumerate(query_result["ids"]):
-                search_result.append(
+            for i, font_name in enumerate(query_result["ids"][0]):
+                results.append(
                     SearchResult(
-                        font_name=str(font_name),
-                        series=query_result["metadatas"][i]["series"],
-                        group=query_result["metadatas"][i]["group"],
-                        unicode=query_result["metadatas"][i]["unicode"],
-                        description=query_result["documents"][i],
+                        font_name=font_name,
+                        series=query_result["metadatas"][0][i]["series"],  # type: ignore
+                        group=query_result["metadatas"][0][i]["group"],  # type: ignore
+                        unicode=query_result["metadatas"][0][i]["unicode"],  # type: ignore
+                        description=query_result["documents"][0][i],  # type: ignore
                     )
                 )
 
-        return search_result
+        return SearchResults(results=results)
