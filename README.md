@@ -2,6 +2,12 @@
 
 ![](./docs/modules.png)
 
+## Quick Start
+
+```shell
+pip install -r requirements.txt -i https://pypi.org/simple
+```
+
 ## 参考资料
 
 - [ChromaDB](https://docs.trychroma.com/)
