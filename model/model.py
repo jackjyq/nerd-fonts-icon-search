@@ -1,4 +1,4 @@
-# load config
+#################################### load config #######################################
 import sys
 
 try:
@@ -16,26 +16,29 @@ USER_CONFIG = Config()
 else:
     print("load config.py\n")
     print(USER_CONFIG)
-
+########################################################################################
 
 import chromadb
 from chromadb.api.types import EmbeddingFunction
 from chromadb.utils import embedding_functions
+from pydantic import BaseModel
 from tqdm import tqdm
 
 from model import data_subset
-from pydantic import BaseModel
+
 
 class SearchResult(BaseModel):
-    ...
+    font_name: str
+    series: str | None
+    group: str | None
+    unicode: str | None
+    description: str
 
 
-
-
-def parse_glyph_name(name: str) -> tuple[str, str, str]:
+def parse_font_name(name: str) -> tuple[str, str, str]:
     """
     Args:
-        glyph_name, such as "nf-cod-arrow_small_left"
+        name, such as "nf-cod-arrow_small_left"
 
     Return:
         series, group, description, such as:
@@ -85,15 +88,15 @@ class Model:
             api_key=USER_CONFIG.huggingface_api_key,
         )
 
-    def _populate_coll(self, glyphs: dict[str, str]):
+    def _populate_coll(self, input_data: dict[str, str]):
         """populate database by glyphs"""
-        datas = []
-        for glyph_name, unicode in glyphs.items():
-            series, group, description = parse_glyph_name(glyph_name)
+        output_data = []
+        for font_name, unicode in input_data.items():
+            series, group, description = parse_font_name(font_name)
             if group != "mdi":  # icons in the mdi group have been removed
-                datas.append(
+                output_data.append(
                     {
-                        "ids": glyph_name,
+                        "ids": font_name,
                         "metadatas": {
                             "series": series,
                             "group": group,
@@ -103,11 +106,11 @@ class Model:
                     }
                 )
 
-        for data in tqdm(datas):
-            self._coll.add(**data)
+        for item in tqdm(output_data):
+            self._coll.add(**item)
 
     ############################## public methods ######################################
-    def search(self, query: str, n_results: int) -> list[dict]:
+    def search(self, query: str, n_results: int) -> list[SearchResult]:
         """query database
 
         Args:
@@ -115,23 +118,23 @@ class Model:
             n_results: top k results
 
         Return:
-            list of dict, each dict contains:
-                glyph_name (which is id)
-                series
-                group
-                unicode
-                document (which is description)
+            list of SearchResult
         """
-        result = []
+        search_result = []
         if query_result := self._coll.query(
             query_texts=[query],
             n_results=n_results,
             include=["metadatas", "documents"],
         ):
-            for glyph_name in query_result["ids"]:
+            for i, font_name in enumerate(query_result["ids"]):
+                search_result.append(
+                    SearchResult(
+                        font_name=str(font_name),
+                        series=query_result["metadatas"][i]["series"],
+                        group=query_result["metadatas"][i]["group"],
+                        unicode=query_result["metadatas"][i]["unicode"],
+                        description=query_result["documents"][i],
+                    )
+                )
 
-            if query_result["metadatas"]:
-                for metadata in query_result["metadatas"]:
-                    result.append(metadata)
-
-        return result
+        return search_result
