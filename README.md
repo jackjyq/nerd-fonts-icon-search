@@ -5,6 +5,7 @@
 ## Quick Start
 
 ```shell
+# better to use the official repo
 pip install -r requirements.txt -i https://pypi.org/simple
 ```
 
