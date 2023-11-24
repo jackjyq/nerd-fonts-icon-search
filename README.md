@@ -19,6 +19,19 @@ pip install sentence-transformers
 # see https://pytorch.org/
 ```
 
+## Configuration
+
+create `config.py` with the following content and edit
+
+```python
+from default_config import Config
+
+USER_CONFIG = Config(
+    # you can get one for free at https://huggingface.co/
+    huggingface_api_key =
+)
+```
+
 ## Build locally
 
 ```shell
@@ -39,7 +52,7 @@ scp -r .\model\chromadb\ $REMOTE_HOST:$PROJECT_PATH\model
 python app.py
 ```
 
-## Design
+## Architecture
 
 ![](./docs/modules.png)
 
@@ -47,5 +60,5 @@ python app.py
 
 - [Nerdfonts Cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 - [Developing a Single Page App with FastAPI and React](https://testdriven.io/blog/fastapi-react/)
-- [ChromaDB](https://docs.trychroma.com/)
 - [Nodejs on Windows](https://learn.microsoft.com/zh-cn/windows/dev-environment/javascript/nodejs-on-windows)
+- [ChromaDB](https://docs.trychroma.com/)
