@@ -11,6 +11,6 @@ pip install -r requirements.txt -i https://pypi.org/simple
 
 ## References
 
-- [ChromaDB](https://docs.trychroma.com/)
 - [Nerdfonts Cheatsheet](https://www.nerdfonts.com/cheat-sheet)
-- [Nerdfonts Github](https://github.com/ryanoasis/nerd-fonts)
+- [Developing a Single Page App with FastAPI and React](https://testdriven.io/blog/fastapi-react/)
+- [ChromaDB](https://docs.trychroma.com/)
