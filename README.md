@@ -16,13 +16,6 @@ python app.py
 scp -r .\model\chromadb\ $REMOTE_HOST:$PROJECT_PATH\model
 ```
 
-Note: the `req_full.txt` file may be platform dependent. i.e. you may need to fix it if you are not using Windows. for example:
-
-```shell
-# find this line and append the following marker.
-pywin32==306; platform_system=="Windows"
-```
-
 ## Deploy on a server
 
 ```shell
@@ -34,6 +27,15 @@ pip install -r req_mini.txt
 
 # start server (assuming that the database exist)
 python app.py
+```
+
+## Development
+
+Some packages are platform dependent. i.e. you may need to fix it after freeze the requirements file. for example:
+
+```shell
+# find this line and append the following marker.
+pywin32==306; platform_system=="Windows"
 ```
 
 ## Moduels
