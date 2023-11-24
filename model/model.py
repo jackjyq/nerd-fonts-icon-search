@@ -119,7 +119,7 @@ class Model:
         ), "Failed because huggingface_api_key is None"
 
         return embedding_functions.HuggingFaceEmbeddingFunction(
-            model_name=USER_CONFIG.huggingface_model,
+            model_name=f"sentence-transformers/{USER_CONFIG.huggingface_model}",
             api_key=USER_CONFIG.huggingface_api_key,
         )
 
