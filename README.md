@@ -1,5 +1,7 @@
 # Nerd Iconic Font Search
 
+小呆字体图标搜索
+
 a multilingual semantic search engine for nerd fonts glyphs
 
 ![](https://img.shields.io/badge/python-3.11-yellow)
