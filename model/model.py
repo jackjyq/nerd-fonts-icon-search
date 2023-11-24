@@ -69,15 +69,19 @@ class Model:
         """initialize database model
 
         Args:
-            coll_name: collection name to identify the collection, default is the model name
-                       you could specify another collection name to test the same model on different input data
+            coll_name: (str) collection name to identify the collection, default is
+                             the model name
+                             you could specify another collection name to use the same
+                             model on different input data
 
             input_data: (dict) the data to populate the collection
                         (None) when the collection exist, the input_data is not needed
                                however, you can still call self.build_coll(input_data)
                                to rebuild the collection
         """
-        self._client = chromadb.PersistentClient(path="./model/chromadb")
+        self._client = chromadb.PersistentClient(
+            path="./model/chromadb",  # this path is in .gitignore under model folder
+        )
         self._coll_name = coll_name
 
         # build collection with input data if not exist
