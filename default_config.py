@@ -8,15 +8,20 @@ class Config(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     """ model config
-    set a valid huggingface_api_key:
-      use local model to populate the database (faster)
-      use cloud model to search (less memory)
-    
-    set huggingface_api_key to None,
-      always use local model
 
-    see the list of available model name at: https://huggingface.co/models
-      """
+    huggingface_api_key
+      - set a valid huggingface_api_key
+        - use local model to populate the database (faster)
+        - use cloud model to search (less memory)
+      
+      - unset huggingface_api_key
+        - always use local model
+
+    
+    huggingface_model
+     - https://huggingface.co/sentence-transformers
+     - https://www.sbert.net/docs/pretrained_models.html
+    """
     huggingface_api_key: str | None = None
     huggingface_model: str = "all-MiniLM-L6-v2"
     device: Literal["cpu", "cuda"] = "cpu"

@@ -162,7 +162,7 @@ class Model:
         for item in tqdm(output_data):
             coll.upsert(**item)
 
-    def search(self, query_texts: str, n_results: int) -> SearchResults:
+    def search(self, query_texts: str, n_results: int = 1) -> SearchResults:
         """search database
 
         Args:

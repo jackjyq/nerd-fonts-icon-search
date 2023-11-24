@@ -1,44 +1,41 @@
-# Semantic Search
+# Iconic Font Search
 
 ![](https://img.shields.io/badge/python-3.11-yellow)
 
-## Build database locally
+## Dependencies
 
 ```shell
-# include sentence_transformers and Jupyter stuff,
-#   so that you could build database locally, which is faster
-pip install -r req_full.txt
+# packages to run cloud embedding function
+pip install -r requirement.txt
 
-# build the database (assuming that the database does NOT exist)
+# additional packages to run local embedding function
+pip install sentence-transformers
+
+# additional to use cuda to run local embedding function
+# see https://pytorch.org/
+```
+
+## Build locally
+
+```shell
+# build the database locally
+#   assuming that the database on `./model/chromadb` does NOT exist
 python app.py
 
-# upload the local database to remote (We can build on Windows and run on Ubuntu)
+# upload the local database to remote server
+#   We can build on Windows and upload to Ubuntu
 scp -r .\model\chromadb\ $REMOTE_HOST:$PROJECT_PATH\model
 ```
 
-## Deploy on a server
+## Run on server
 
 ```shell
-# exclude sentence_transformers to save resources,
-#   thus you must set `huggingface_api_key` in config.py
-#
-# Tested on both Windows and Ubuntu
-pip install -r req_mini.txt
-
-# start server (assuming that the database exist)
+# start server
+#   assuming that the database on `./model/chromadb` has already been uploaded
 python app.py
 ```
 
-## Development
-
-Some packages are platform dependent. i.e. you may need to fix it after freeze the requirements file. for example:
-
-```shell
-# find this line and append the following marker.
-pywin32==306; platform_system=="Windows"
-```
-
-## Moduels
+## Design
 
 ![](./docs/modules.png)
 
