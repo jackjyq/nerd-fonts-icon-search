@@ -29,7 +29,7 @@ from model.model import Model, SearchResults
 model = Model(input_data=model.input_data.glyphs)
 
 app = FastAPI(
-    title="Iconic Font Search API Documentation",
+    title="Nerd Iconic Font Search API Documentation",
     # Disable default docs
     docs_url=None,
     redoc_url=None,

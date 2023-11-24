@@ -23,7 +23,7 @@ class Config(BaseModel):
      - https://www.sbert.net/docs/pretrained_models.html
     """
     huggingface_api_key: str | None = None
-    huggingface_model: str = "all-MiniLM-L6-v2"
+    huggingface_model: str = "distiluse-base-multilingual-cased-v2"
     device: Literal["cpu", "cuda"] = "cpu"
 
     """backend server config
