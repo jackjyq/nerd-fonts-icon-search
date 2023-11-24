@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["chromadb", "huggingface", "Nerdfonts"]
+  "cSpell.words": [
+    "chromadb",
+    "huggingface",
+    "metadatas",
+    "Nerdfonts",
+    "redoc",
+    "tqdm",
+    "uvicorn"
+  ]
 }

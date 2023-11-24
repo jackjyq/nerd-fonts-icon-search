@@ -1,4 +1,4 @@
-# 基于 word2vec 的文档检索工具
+# Semantic Search
 
 ![](./docs/modules.png)
 
@@ -8,10 +8,6 @@
 # better to use the official repo
 pip install -r requirements.txt -i https://pypi.org/simple
 ```
-
-## Configuration
-
-Copy `default_config.py` as `local_config.py` and edit.
 
 ## References
 
