@@ -52,7 +52,7 @@ app.add_middleware(
 def get_this_docs_page():
     return get_swagger_ui_html(
         openapi_url="/openapi.json",
-        title="Semantic Search",
+        title="Nerd Iconic Font Search API Documentation",
     )
 
 
