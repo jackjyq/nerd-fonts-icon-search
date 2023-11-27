@@ -14,16 +14,21 @@ import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { Typography } from "@mui/material";
-
-const darkTheme = createTheme({
+import { Box, Typography } from "@mui/material";
+import logo from "./android-chrome-192x192.png";
+const theme = createTheme({
   palette: {
-    mode: "light",
-  },
-  typography: {
-    subtitle1: { color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" },
+    mode: "dark",
   },
 });
+
+function Logo() {
+  return (
+    <Box display="flex" justifyContent="center">
+      <img src={logo} alt="Logo" />
+    </Box>
+  );
+}
 
 function SearchBox() {
   return (
@@ -106,9 +111,10 @@ function ResultArea() {
 function App() {
   return (
     <React.Fragment>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="xl">
+          <Logo></Logo>
           <SearchBox />
           <ResultFormatRadioButtons />
           <ResultArea />
