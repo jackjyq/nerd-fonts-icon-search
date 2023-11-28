@@ -15,7 +15,8 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";
-import logo from "./android-chrome-192x192.png";
+import logo from "./logo.svg";
+
 const theme = createTheme({
   palette: {
     mode: "dark",
