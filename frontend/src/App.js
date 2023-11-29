@@ -23,54 +23,21 @@ const theme = createTheme({
   },
 });
 
-function Logo() {
-  return (
-    <Box display="flex" justifyContent="center">
-      <img src={logo} alt="Logo" />
-    </Box>
-  );
+function LogoSection() {
+  return <img src={logo} width={64} alt="Logo" />;
 }
 
-function SearchBox() {
+function SearchBoxSection() {
   return (
-    <Paper
-      component="form"
-      sx={{
-        p: "2px 4px",
-        mt: 2,
-        display: "flex",
-        alignItems: "center",
-        maxWidth: 600,
-      }}
-    >
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for glyphs..." />
+    <Paper component="form" sx={{ display: "flex", width: 600 }}>
+      <InputBase
+        sx={{ ml: 1, flexGrow: 1 }}
+        placeholder="Search for nerd fonts icons..."
+      />
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>
-  );
-}
-
-function ResultFormatRadioButtons() {
-  return (
-    <FormControl>
-      <RadioGroup
-        row
-        name="result-format-radio-buttons"
-        defaultValue="font-name"
-      >
-        <FormControlLabel
-          value="font-name"
-          control={<Radio />}
-          label="font name"
-        />
-        <FormControlLabel
-          value="hex-code"
-          control={<Radio />}
-          label="hex code"
-        />
-      </RadioGroup>
-    </FormControl>
   );
 }
 
@@ -94,19 +61,33 @@ function ResultItem({ fontName, Text }) {
   );
 }
 
-function ResultArea() {
+function ResultListSection() {
   return (
     <Stack
       direction="row"
       flexWrap="wrap"
       sx={{
-        borderTop: 1,
-        borderColor: "divider",
+        width: 800,
+        background: "orange",
       }}
     >
       <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
+      <ResultItem fontName={"nf-md-cat"} Text={"cat"}></ResultItem>
     </Stack>
   );
+}
+
+function FooterSection() {
+  return <Typography variant="body2">copyright Jack Jiang</Typography>;
 }
 
 function App() {
@@ -114,11 +95,37 @@ function App() {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="xl">
-          <Logo></Logo>
-          <SearchBox />
-          <ResultFormatRadioButtons />
-          <ResultArea />
+
+        {/* the logo section */}
+        <Container sx={{ display: "flex", justifyContent: "center", py: 1 }}>
+          <LogoSection />
+        </Container>
+
+        {/* the search section */}
+        <Container sx={{ display: "flex", justifyContent: "center", py: 0 }}>
+          <SearchBoxSection />
+        </Container>
+
+        {/* the result list section */}
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            py: 1,
+          }}
+        >
+          <ResultListSection />
+        </Container>
+
+        {/* the footer section */}
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            py: 2,
+          }}
+        >
+          <FooterSection />
         </Container>
       </ThemeProvider>
     </React.Fragment>
