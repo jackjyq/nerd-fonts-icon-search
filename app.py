@@ -32,7 +32,7 @@ from model.model import Model, SearchResults
 model = Model(input_data=model.input_data.glyphs)
 
 app = FastAPI(
-    title="Nerd Iconic Font Search API Documentation",
+    title="Nerd Fonts Icon Search API Documentation",
     # Disable default docs
     docs_url=None,
     redoc_url=None,
@@ -52,7 +52,7 @@ app.add_middleware(
 def get_this_docs_page():
     return get_swagger_ui_html(
         openapi_url="/openapi.json",
-        title="Nerd Iconic Font Search API Documentation",
+        title="Nerd Fonts Icon Search API Documentation",
     )
 
 

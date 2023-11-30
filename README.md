@@ -1,12 +1,24 @@
-# Nerd Iconic Font Search
-
-小呆字体图标搜索
+# Nerd Fonts Icon Search
 
 A multilingual semantic search engine for nerd fonts glyphs
 
-![](https://img.shields.io/badge/python-3.11-yellow)
+## Architecture
 
-## Dependencies
+![](./docs/modules.png)
+
+- **Frontend**: [Material UI](https://mui.com/)
+- **App server**: [FastAPI](https://fastapi.tiangolo.com/)
+- **Model**: [ChromaDB](https://docs.trychroma.com/)
+
+## Frontend
+
+see [`./frontend/README.md`](./frontend/README.md)
+
+## Backend
+
+### Dependencies
+
+![](https://img.shields.io/badge/python-3.11-yellow)
 
 ```shell
 # essential packages to run cloud embedding function
@@ -19,9 +31,11 @@ pip install sentence-transformers
 # see https://pytorch.org/
 ```
 
-## Configuration
+see [`./docs/benchmark.md`](./docs/benchmark.md) about the performance of embedding functions
 
-create `config.py` with the following content and edit
+### Configuration
+
+create `config.py` with the following lines and edit
 
 ```python
 from default_config import Config
@@ -32,7 +46,11 @@ USER_CONFIG = Config(
 )
 ```
 
-## Build locally
+see `default_config.py` for detail
+
+### Build database locally
+
+It is recommended to compute the embeddings of all input data locally and upload the database to the server.
 
 ```shell
 # build the database locally
@@ -40,25 +58,21 @@ USER_CONFIG = Config(
 python app.py
 
 # upload the local database to remote server
-#   We can build on Windows and upload to Ubuntu
 scp -r .\model\chromadb\ $REMOTE_HOST:$PROJECT_PATH\model
 ```
 
-## Run on server
+It is OK to build database on Windows 11 and upload to Ubuntu
+
+### Run on a server
 
 ```shell
 # start server
 #   assuming that the database `./model/chromadb` has already been uploaded
+#   also, you need to set up an valid `huggingface_api_key`
 python app.py
 ```
-
-## Architecture
-
-![](./docs/modules.png)
 
 ## References
 
 - [Nerdfonts Cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 - [Developing a Single Page App with FastAPI and React](https://testdriven.io/blog/fastapi-react/)
-- [Nodejs on Windows](https://learn.microsoft.com/zh-cn/windows/dev-environment/javascript/nodejs-on-windows)
-- [ChromaDB](https://docs.trychroma.com/)
