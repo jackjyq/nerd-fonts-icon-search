@@ -12,7 +12,7 @@ A multilingual semantic search engine for nerd fonts icons
 
 ## Frontend
 
-see [`./frontend/README.md`](./frontend/README.md)
+see [./frontend/README.md](./frontend/README.md)
 
 ## Backend
 
@@ -31,7 +31,7 @@ pip install sentence-transformers
 # see https://pytorch.org/
 ```
 
-see [`./docs/benchmark.md`](./docs/benchmark.md) about the performance of embedding functions
+see [./docs/benchmark.md](./docs/benchmark.md) about the performance of embedding functions
 
 ### Configuration
 
