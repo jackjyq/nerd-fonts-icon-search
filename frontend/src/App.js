@@ -16,7 +16,7 @@ import logo from "./logo.svg";
 import "./webfont.css";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ContentCopy from "@mui/icons-material/ContentCopy";
-
+import { useState } from "react";
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -31,14 +31,19 @@ function LogoSection() {
   );
 }
 
-function SearchBoxSection() {
+function SearchBoxSection(handleClick) {
   return (
     <Paper component="form" sx={{ display: "flex", width: 600 }}>
       <InputBase
         sx={{ ml: 1, flexGrow: 1 }}
         placeholder="Search for nerd fonts icons..."
       />
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+      <IconButton
+        type="button"
+        sx={{ p: "10px" }}
+        aria-label="search"
+        onClick={handleClick}
+      >
         <SearchIcon />
       </IconButton>
     </Paper>
@@ -133,6 +138,13 @@ function App() {
     https://mui.com/material-ui/customization/breakpoints/
     https://mui.com/system/getting-started/the-sx-prop/#sizing
   */
+  const [searchResults, setSearchResults] = useState(0);
+
+  function handleClick() {
+    console.log("searching...");
+    setSearchResults(searchResults + 1);
+  }
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
@@ -156,7 +168,7 @@ function App() {
             py: { xs: 1, sm: 2 },
           }}
         >
-          <SearchBoxSection />
+          <SearchBoxSection handleClick={handleClick} />
         </Container>
 
         {/********************** the result list section *********************/}
