@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Nerd Fonts Icon Search
 
 ![](https://img.shields.io/badge/nodejs-20.10%20LTS-green)
 
