@@ -1,3 +1,4 @@
+import ContentCopy from "@mui/icons-material/ContentCopy";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Icon, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
@@ -5,18 +6,21 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import * as React from "react";
+import { useState } from "react";
 import "./App.css";
 import logo from "./logo.svg";
+import sample from "./sample.json";
+import unicodeLiteral from "./utils";
 import "./webfont.css";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ContentCopy from "@mui/icons-material/ContentCopy";
-import { useState } from "react";
+import Link from "@mui/material/Link";
+
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -31,7 +35,7 @@ function LogoSection() {
   );
 }
 
-function SearchBoxSection(handleClick) {
+function SearchBoxSection({ handleSearch }) {
   return (
     <Paper component="form" sx={{ display: "flex", width: 600 }}>
       <InputBase
@@ -42,7 +46,7 @@ function SearchBoxSection(handleClick) {
         type="button"
         sx={{ p: "10px" }}
         aria-label="search"
-        onClick={handleClick}
+        onClick={handleSearch}
       >
         <SearchIcon />
       </IconButton>
@@ -50,64 +54,95 @@ function SearchBoxSection(handleClick) {
   );
 }
 
-function FontIcon({ fontName }) {
-  return <Icon className={`nf ${fontName}`} />;
+function ResultItemMenuItem({ handleClose, menuText }) {
+  /* menuText will be copied to clipboard when clicked by handleClose
+   */
+  return (
+    <MenuItem
+      onClick={(e) => handleClose(menuText)}
+      sx={{ fontFamily: "NerdFontsSymbols Nerd Font" }}
+    >
+      <ListItemIcon>
+        <ContentCopy fontSize="small" />
+      </ListItemIcon>
+      {menuText}
+    </MenuItem>
+  );
 }
 
-function ResultItem({ fontName, label, menuTexts }) {
-  /* result item
+function ResultItem({ result }) {
+  /* result item, including chip and menu
 
-    props:
-      - fontName: the font name to display the icon
-      - label: the text to display after the icon
-      - menuTexts: an array of strings to copy to clipboard
+  result object:
+
+    ```
+    {
+        "font_name": "nf-md-cat",
+        "series": "nf",
+        "group": "md",
+        "unicode": "f011b",
+        "description": "cat"
+    }
+    ```
   */
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleOpenMenu = (event) => {
+    // show result menu
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleCloseMenu = (menuText) => {
+    // close result menu and copy menuText to clipboard
+    navigator.clipboard.writeText(menuText);
     setAnchorEl(null);
   };
 
+  const font = String.fromCodePoint(`0x${result.unicode}`);
+
   return (
     <Box>
+      {/* result item chip */}
       <Chip
-        icon={FontIcon((fontName = { fontName }))}
-        label={label}
+        icon={<Icon className={`nf ${result.font_name}`} />}
+        label={result.font_name}
         size="medium"
         clickable
         id="chip"
         aria-controls={open ? "menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
+        onClick={handleOpenMenu}
       />
 
+      {/* result item menu */}
       <Menu
         id="menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseMenu}
         MenuListProps={{
           "aria-labelledby": "chip",
         }}
       >
-        {menuTexts.map((text) => (
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <ContentCopy fontSize="small" />
-            </ListItemIcon>
-            {text}
-          </MenuItem>
-        ))}
+        <ResultItemMenuItem handleClose={handleCloseMenu} menuText={font} />
+        <ResultItemMenuItem
+          handleClose={handleCloseMenu}
+          menuText={result.unicode}
+        />
+        <ResultItemMenuItem
+          handleClose={handleCloseMenu}
+          menuText={result.font_name}
+        />
+        <ResultItemMenuItem
+          handleClose={handleCloseMenu}
+          menuText={unicodeLiteral(font)}
+        />
       </Menu>
     </Box>
   );
 }
 
-function ResultListSection() {
+function ResultListSection({ searchResults }) {
   return (
     <Stack
       direction="row"
@@ -118,17 +153,26 @@ function ResultListSection() {
         width: 900,
       }}
     >
-      <ResultItem
-        fontName={"nf-md-cat"}
-        label={"cat"}
-        menuTexts={["a", "b", "c"]}
-      ></ResultItem>
+      {searchResults.map((result, index) => (
+        <ResultItem result={result} key={index}></ResultItem>
+      ))}
     </Stack>
   );
 }
 
 function FooterSection() {
-  return <Typography variant="body2">copyright Jack Jiang</Typography>;
+  return (
+    <Typography variant="body2">
+      Developed by&nbsp;
+      <Link href="https://jackjyq.com/" underline="none">
+        Jack Jiang
+      </Link>
+      &nbsp; for&nbsp;
+      <Link href="https://www.nerdfonts.com/" underline="none">
+        Nerd Fonts
+      </Link>
+    </Typography>
+  );
 }
 
 function App() {
@@ -138,11 +182,10 @@ function App() {
     https://mui.com/material-ui/customization/breakpoints/
     https://mui.com/system/getting-started/the-sx-prop/#sizing
   */
-  const [searchResults, setSearchResults] = useState(0);
+  const [searchResults, setSearchResults] = useState([]);
 
-  function handleClick() {
-    console.log("searching...");
-    setSearchResults(searchResults + 1);
+  function handleSearch() {
+    setSearchResults(sample.results);
   }
 
   return (
@@ -168,7 +211,7 @@ function App() {
             py: { xs: 1, sm: 2 },
           }}
         >
-          <SearchBoxSection handleClick={handleClick} />
+          <SearchBoxSection handleSearch={handleSearch} />
         </Container>
 
         {/********************** the result list section *********************/}
@@ -179,7 +222,7 @@ function App() {
             py: { xs: 1, sm: 2 },
           }}
         >
-          <ResultListSection />
+          <ResultListSection searchResults={searchResults} />
         </Container>
 
         {/************************ the footer section ************************/}

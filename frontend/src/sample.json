@@ -1,0 +1,76 @@
+{
+  "results": [
+    {
+      "font_name": "nf-md-cat",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f011b",
+      "description": "cat"
+    },
+    {
+      "font_name": "nf-md-chat_plus",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f140f",
+      "description": "chat plus"
+    },
+    {
+      "font_name": "nf-md-mace",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f1843",
+      "description": "mace"
+    },
+    {
+      "font_name": "nf-fa-paw",
+      "series": "nf",
+      "group": "fa",
+      "unicode": "f1b0",
+      "description": "paw"
+    },
+    {
+      "font_name": "nf-md-paw",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f03e9",
+      "description": "paw"
+    },
+    {
+      "font_name": "nf-md-kite",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f1985",
+      "description": "kite"
+    },
+    {
+      "font_name": "nf-md-dog",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f0a43",
+      "description": "dog"
+    },
+    {
+      "font_name": "nf-md-koala",
+      "series": "nf",
+      "group": "md",
+      "unicode": "f173f",
+      "description": "koala"
+    },
+    {
+      "font_name": "nf-custom-kotlin",
+      "series": "nf",
+      "group": "custom",
+      "unicode": "e634",
+      "description": "kotlin"
+    },
+    {
+      "font_name": "nf-seti-kotlin",
+      "series": "nf",
+      "group": "seti",
+      "unicode": "e634",
+      "description": "kotlin"
+    }
+  ],
+  "num_results": 10,
+  "execution_time": 1.0379224999342114
+}
