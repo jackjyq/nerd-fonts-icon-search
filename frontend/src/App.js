@@ -16,6 +16,7 @@ import logo from "./logo.svg";
 import "./webfont.css";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ContentCopy from "@mui/icons-material/ContentCopy";
+
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -126,16 +127,17 @@ function FooterSection() {
 }
 
 function App() {
+  /* the main app, most of the layout is done here
+  
+  Refs:
+    https://mui.com/material-ui/customization/breakpoints/
+    https://mui.com/system/getting-started/the-sx-prop/#sizing
+  */
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {/* Refs:
-
-          https://mui.com/material-ui/customization/breakpoints/
-          https://mui.com/system/getting-started/the-sx-prop/#sizing
-        */}
-        {/* the logo section */}
+        {/************************* the logo section *************************/}
         <Container
           sx={{
             display: "flex",
@@ -146,7 +148,7 @@ function App() {
           <LogoSection />
         </Container>
 
-        {/* the search section */}
+        {/************************* the search section ***********************/}
         <Container
           sx={{
             display: "flex",
@@ -157,7 +159,7 @@ function App() {
           <SearchBoxSection />
         </Container>
 
-        {/* the result list section */}
+        {/********************** the result list section *********************/}
         <Container
           sx={{
             display: "flex",
@@ -168,7 +170,7 @@ function App() {
           <ResultListSection />
         </Container>
 
-        {/* the footer section */}
+        {/************************ the footer section ************************/}
         <Container
           sx={{
             display: "flex",
