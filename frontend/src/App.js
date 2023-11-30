@@ -1,10 +1,12 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Typography } from "@mui/material";
+import { Box, Icon, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -12,7 +14,8 @@ import * as React from "react";
 import "./App.css";
 import logo from "./logo.svg";
 import "./webfont.css";
-import { Icon } from "@mui/material";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ContentCopy from "@mui/icons-material/ContentCopy";
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -45,19 +48,56 @@ function FontIcon({ fontName }) {
   return <Icon className={`nf ${fontName}`} />;
 }
 
-function ResultItem({ fontName, label }) {
-  /*
+function ResultItem({ fontName, label, menuTexts }) {
+  /* result item
+
     props:
-      - fontName: the font name used to display the icon
-      - label: the text to display
+      - fontName: the font name to display the icon
+      - label: the text to display after the icon
+      - menuTexts: an array of strings to copy to clipboard
   */
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Chip
-      icon={FontIcon((fontName = { fontName }))}
-      label={label}
-      size="medium"
-      clickable
-    />
+    <Box>
+      <Chip
+        icon={FontIcon((fontName = { fontName }))}
+        label={label}
+        size="medium"
+        clickable
+        id="chip"
+        aria-controls={open ? "menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      />
+
+      <Menu
+        id="menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "chip",
+        }}
+      >
+        {menuTexts.map((text) => (
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <ContentCopy fontSize="small" />
+            </ListItemIcon>
+            {text}
+          </MenuItem>
+        ))}
+      </Menu>
+    </Box>
   );
 }
 
@@ -72,50 +112,11 @@ function ResultListSection() {
         width: 900,
       }}
     >
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"fasdfasd"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"111"}></ResultItem>
       <ResultItem
         fontName={"nf-md-cat"}
-        label={"cadfadsfasdfasdfasdt"}
+        label={"cat"}
+        menuTexts={["a", "b", "c"]}
       ></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"ca234234t"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cfadsfasdat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"fasdf"}></ResultItem>
-      <ResultItem
-        fontName={"nf-md-cat"}
-        label={"fadsfasdfasdfasdfasdfasdfasd"}
-      ></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
-      <ResultItem fontName={"nf-md-cat"} label={"cat"}></ResultItem>
     </Stack>
   );
 }
