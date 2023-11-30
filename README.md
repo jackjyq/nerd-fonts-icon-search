@@ -1,6 +1,6 @@
 # Nerd Fonts Icon Search
 
-A multilingual semantic search engine for nerd fonts glyphs
+A multilingual semantic search engine for nerd fonts icons
 
 ## Architecture
 
