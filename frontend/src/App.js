@@ -34,17 +34,24 @@ function LogoSection() {
   );
 }
 
-function SearchBoxSection({ handleSearch }) {
-  const [query, setQuery] = React.useState("");
-
+function SearchBoxSection({ handleSearch, query, setQuery }) {
   return (
-    <Paper component="form" sx={{ display: "flex", width: 600 }}>
+    <Paper
+      component="form"
+      sx={{ display: "flex", width: 600 }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch();
+      }}
+    >
       <InputBase
         sx={{ ml: 1, flexGrow: 1 }}
         placeholder="Search for nerd fonts icons..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
       <IconButton
-        type="button"
+        type="submit"
         sx={{ p: "10px" }}
         aria-label="search"
         onClick={handleSearch}
@@ -194,9 +201,15 @@ function App() {
     https://mui.com/system/getting-started/the-sx-prop/#sizing
   */
   const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = React.useState("");
 
   function handleSearch() {
-    fetch(`http://localhost:8000/search?q=${encodeURIComponent("cat")}`)
+    fetch(
+      new URL(
+        `/api/search?q=${encodeURIComponent(query)}`,
+        process.env.REACT_APP_BACKEND_SERVER
+      )
+    )
       .then((response) => {
         return response.json();
       })
@@ -231,7 +244,11 @@ function App() {
             py: { xs: 1, sm: 2 },
           }}
         >
-          <SearchBoxSection handleSearch={handleSearch} />
+          <SearchBoxSection
+            handleSearch={handleSearch}
+            query={query}
+            setQuery={setQuery}
+          />
         </Container>
 
         {/********************** the result list section *********************/}

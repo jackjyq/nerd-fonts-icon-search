@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict, computed_field
 class Config(BaseModel):
     model_config = ConfigDict(frozen=True)
 
+    app_title: str = "Nerd Fonts Icon Search API Documentation"
     """ model config
 
     huggingface_api_key
