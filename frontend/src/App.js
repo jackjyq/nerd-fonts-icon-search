@@ -16,7 +16,6 @@ import * as React from "react";
 import { useState } from "react";
 import "./App.css";
 import logo from "./logo.svg";
-import sample from "./sample.json";
 import unicodeLiteral from "./utils";
 import "./webfont.css";
 import Link from "@mui/material/Link";
@@ -185,7 +184,16 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   function handleSearch() {
-    setSearchResults(sample.results);
+    fetch("./sample.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setSearchResults(data.results);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
