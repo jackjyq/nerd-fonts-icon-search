@@ -13,4 +13,5 @@
 
 - dimension: 512
 - database size: 60MB
+- build speed (i5-13500H): 15it/s
 - build speed (RTX 4060Ti): 140it/s

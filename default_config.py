@@ -12,7 +12,7 @@ class Config(BaseModel):
     huggingface_api_key
       - set a valid huggingface_api_key
         - use local model to populate the database (faster)
-        - use cloud model to search (less memory)
+        - use cloud model to search (less resources)
       
       - unset huggingface_api_key
         - always use local model

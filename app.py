@@ -8,10 +8,7 @@ except ModuleNotFoundError:
         f.write(
             """from default_config import Config
 
-USER_CONFIG = Config(
-    # you can get one for free at https://huggingface.co/
-    huggingface_api_key =
-)
+USER_CONFIG = Config()
 """
         )
     print("Please edit `config.py` and try again\n")

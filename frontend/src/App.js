@@ -35,6 +35,8 @@ function LogoSection() {
 }
 
 function SearchBoxSection({ handleSearch }) {
+  const [query, setQuery] = React.useState("");
+
   return (
     <Paper component="form" sx={{ display: "flex", width: 600 }}>
       <InputBase
@@ -194,7 +196,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   function handleSearch() {
-    fetch("./sample.json")
+    fetch(`http://localhost:8000/search?q=${encodeURIComponent("cat")}`)
       .then((response) => {
         return response.json();
       })
