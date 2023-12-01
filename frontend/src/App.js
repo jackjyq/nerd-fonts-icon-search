@@ -161,16 +161,26 @@ function ResultListSection({ searchResults }) {
 
 function FooterSection() {
   return (
-    <Typography variant="body2">
-      Developed by&nbsp;
-      <Link href="https://jackjyq.com/" underline="none">
-        Jack Jiang
-      </Link>
-      &nbsp; for&nbsp;
-      <Link href="https://www.nerdfonts.com/" underline="none">
-        Nerd Fonts
-      </Link>
-    </Typography>
+    <Container>
+      <Box sx={{ textAlign: "center" }}>
+        <Typography variant="body2">
+          To display font icons in terminal/editor/apps, one of the{" "}
+          <Link href="https://www.nerdfonts.com/" underline="none">
+            Nerd Fonts
+          </Link>{" "}
+          needs to be used
+        </Typography>
+      </Box>
+
+      <Box sx={{ textAlign: "center" }}>
+        <Typography variant="body2">
+          Developed by&nbsp;
+          <Link href="https://jackjyq.com/" underline="none">
+            Jack Jiang
+          </Link>
+        </Typography>
+      </Box>
+    </Container>
   );
 }
 
