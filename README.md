@@ -10,39 +10,6 @@ A multilingual semantic search engine for nerd fonts icons
 - **App server**: [FastAPI](https://fastapi.tiangolo.com/)
 - **Model**: [ChromaDB](https://docs.trychroma.com/)
 
-## Frontend
-
-![](https://img.shields.io/badge/nodejs-20.10%20LTS-green)
-
-### quick start
-
-```shell
-# in `$PROJECT_ROOT/frontend` folder
-npm install
-
-npm start
-```
-
-### deploy
-
-copy `.env` to `.env.local` and edit
-
-```env
-REACT_APP_BACKEND_SERVER= ...
-```
-
-build and upload static files
-
-```shell
-# in localhost `$PROJECT_ROOT/frontend` folder
-npm run build
-
-# upload build dir to remote server
-scp -r .\frontend\build\ $REMOTE_HOST:$PROJECT_PATH\frontend\build
-```
-
-set up Nginx to serve static content
-
 ## Backend
 
 ![](https://img.shields.io/badge/python-3.11-yellow)
@@ -94,6 +61,39 @@ python main.py
 ```
 
 set up uvicorn and Nginx to serve the backend
+
+## Frontend
+
+![](https://img.shields.io/badge/nodejs-20.10%20LTS-green)
+
+### quick start
+
+```shell
+# in `$PROJECT_ROOT/frontend` folder
+npm install
+
+npm start
+```
+
+### deploy
+
+copy `.env` to `.env.local` and edit
+
+```env
+REACT_APP_BACKEND_SERVER= ...
+```
+
+build and upload static files
+
+```shell
+# in localhost `$PROJECT_ROOT/frontend` folder
+npm run build
+
+# upload build dir to remote server
+scp -r .\build\ $REMOTE_HOST:$PROJECT_PATH\frontend\build
+```
+
+set up Nginx to serve static content
 
 ## References
 
