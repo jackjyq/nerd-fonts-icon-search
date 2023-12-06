@@ -65,9 +65,4 @@ def search(
 
 #################################### start server ######################################
 if __name__ == "__main__":
-    uvicorn.run(
-        "app:app",
-        workers=1,
-        host=USER_CONFIG.backend_host,
-        port=USER_CONFIG.backend_port,
-    )
+    uvicorn.run(app)

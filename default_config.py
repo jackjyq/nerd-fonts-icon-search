@@ -14,25 +14,24 @@ class Config(BaseModel):
       - set a valid huggingface_api_key
         - use local model to populate the database (faster)
         - use cloud model to search (less resources)
-      
       - unset huggingface_api_key
         - always use local model
 
-    
     huggingface_model
      - https://huggingface.co/sentence-transformers
      - https://www.sbert.net/docs/pretrained_models.html
+
+    device
+      - cpu
+      - cuda, you need to install pytorch with cuda support, see https://pytorch.org/
+
+    frontend_host
+    frontend_port
+      - used to set the CORS policy
     """
     huggingface_api_key: str | None = None
     huggingface_model: str = "distiluse-base-multilingual-cased-v2"
     device: Literal["cpu", "cuda"] = "cpu"
-
-    """backend server config
-
-    the frontend_host and port will be used to set the CORS policy
-    """
-    backend_host: str = "127.0.0.1"
-    backend_port: int = 8000
     frontend_host: str = "localhost"
     frontend_port: int = 3000
 
