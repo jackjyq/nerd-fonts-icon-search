@@ -38,11 +38,7 @@ class Config(BaseModel):
     @computed_field
     def allow_origins(self) -> list[str]:
         netloc = f"{self.frontend_host}:{self.frontend_port}"
-        return [
-            f"{netloc}",
-            f"http://{netloc}",
-            f"https://{netloc}",
-        ]
+        return [f"http://{netloc}", f"https://{netloc}"]
 
     def __str__(self) -> str:
         return pformat(self.model_dump(), indent=2)
