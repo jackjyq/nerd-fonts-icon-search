@@ -46,7 +46,7 @@ app.add_middleware(
 
 #################################### API endpoints #####################################
 @app.get("/api")
-def get_this_docs_page():
+async def get_this_docs_page():
     return get_swagger_ui_html(
         openapi_url="/openapi.json",
         title=USER_CONFIG.app_title,
@@ -54,7 +54,7 @@ def get_this_docs_page():
 
 
 @app.get("/api/search")
-def search(
+async def search(
     q: Annotated[str, Query(title="query text", max_length=50)],
     num_results: Annotated[
         int, Query(title="max number of results", gt=0, le=100)
