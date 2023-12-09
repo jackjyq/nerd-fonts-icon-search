@@ -183,10 +183,19 @@ function FooterSection() {
 
       <Box sx={{ textAlign: "center" }}>
         <Typography variant="body2">
-          Developed by&nbsp;
+          Copyright &copy; 2023&nbsp;
           <Link href="https://jackjyq.com/" underline="none">
-            Jack Jiang
+            jackjyq.com
           </Link>
+          . Open sourced on{" "}
+          <Link href="https://github.com/jackjyq/nerd-fonts-icon-search">
+            GitHub
+          </Link>{" "}
+          under{" "}
+          <Link href="https://github.com/jackjyq/nerd-fonts-icon-search/blob/master/LICENSE">
+            MIT License
+          </Link>
+          .
         </Typography>
       </Box>
     </Container>
